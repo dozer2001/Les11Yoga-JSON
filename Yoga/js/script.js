@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    tabsHeader.addEventListener('click', (e) => {
+    tabsHeader.addEventListener('click', function (event) {
         let target = event.target;
         if (target && target.classList.contains('info-header-tab')) {
             for (let i = 0; i < allTabs.length; i++) {
@@ -95,7 +95,7 @@ window.addEventListener('DOMContentLoaded', function () {
         photo = document.getElementById('photo'),
         about = document.getElementById('about');
 
-    ul.addEventListener('click', (e) => {
+    ul.addEventListener('click', function (event) {
         event.preventDefault();
         let target = event.target;
         if (event.target.hash) {
@@ -133,7 +133,7 @@ window.addEventListener('DOMContentLoaded', function () {
         description = document.getElementsByClassName('description-btn'),
         info = document.querySelector('.info');
 
-    info.addEventListener('click', (e) => {
+    info.addEventListener('click', function (event) {
         let target = event.target;
         if (target.className === 'description-btn') {
             overlay.style.display = 'block';
@@ -142,17 +142,103 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    more.addEventListener('click', (e) => {
+    more.addEventListener('click', function () {
         overlay.style.display = 'block';
+        console.log(this);
         this.classList.add('more-splash');
         document.body.style.overflow = 'hidden';
     });
 
-    close.addEventListener('click', (e) => {
+    close.addEventListener('click', function () {
         overlay.style.display = 'none';
         this.classList.remove('more-splash');
         document.body.style.overflow = '';
     });
 
 
+    //Form
+    let message = {
+        loading: 'Загрузка..',
+        success: 'Спасибо!Скоро мы с вами свяжемся!',
+        failure: 'Что-то пошло не так..',
+        numbers: 'Введите числа чилса в строку "номер телефона"'
+    };
+
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
+
+    statusMessage.classList.add('status');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        form.appendChild(statusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/x-ww-form-urlencoded');
+
+
+        let formData = new FormData(form);
+        request.send(formData);
+
+        request.addEventListener('readystatechange', function () {
+            if (request.readyState < 4) {
+                statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status === 200) {
+                statusMessage.innerHTML = message.success;
+            } else {
+                statusMessage.innerHTML = message.failure;
+            }
+        });
+        for (let i = 0; i < input.length; i++) {
+            input[i].value = '';
+        };
+    });
+
+
+    //Form END
+
+
+    //Contanct Form
+    let contactFrom = document.querySelector('.contact-form'),
+        contactInput = contactFrom.getElementsByTagName('input');
+    statusMessage.classList.add('status');
+
+    contactFrom.addEventListener('submit', function (event) {
+        event.preventDefault();
+        contactFrom.appendChild(statusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/x-ww-form-urlencoded');
+        let formData = new FormData(contactFrom);
+        request.send(formData);
+        if(contactInput[1].value == (/\D/, '')){
+
+            request.addEventListener('readystatechange', function () {
+            if (request.readyState < 4) {
+                statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status === 200) {
+                statusMessage.innerHTML = message.success;
+            } else {
+                statusMessage.innerHTML = message.failure;
+            }
+        });
+        for (let i = 0; i < contactInput.length; i++) {
+            contactInput[i].value = '';
+        };
+        }else{
+            console.log(contactInput[1].value);
+            statusMessage.innerHTML = message.numbers;
+            contactInput[1].value = '';
+        }
+
+    });
+
+
 });
+function cislo(){
+    if (event.keyCode != 43 && event.keyCode < 48 || event.keyCode > 57)
+        event.preventDefault();
+}
