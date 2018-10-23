@@ -150,7 +150,7 @@
 				</div>
 				<div class="counter-block">
 					<div class="counter-block-option">На сколько дней</div>
-					<input type="number" min="1" step="1" class="counter-block-input" onKeyPress=cislo()>
+					<input type="number" min="1" step="1" class="counter-block-input" onKeyPress=cislo(event)>
 				</div>
 				<div class="counter-block">
 					<div class="counter-block-option">Выберете базу</div>
@@ -175,7 +175,7 @@
 					</div>
 					<form id="form">
 						<input required type="email" name="email" placeholder="Ваша почта">
-						<input required type="tel" name="phone" placeholder="Ваш телефон" onKeyPress=cislo()>
+						<input required type="tel" name="phone" placeholder="Ваш телефон" onKeyPress=cislo(event)>
 						<button type="submit" onKeyPress="cislo()">Отправить</button>
 					</form>
 				</div>
@@ -222,7 +222,7 @@
 								<label class="popup-form__label" for="phone">
 								Введите ваш номер телефона:
 								</label>
-								<input class="popup-form__input" name="phone" type="tel" required placeholder="+7(978) 973 33 45" onKeyPress=cislo()>
+								<input class="popup-form__input" name="phone" type="tel" required placeholder="+7(978) 973 33 45" onKeyPress=cislo(event)>
 								<button class="button popup-form__btn">
 									Оставить заявку!
 								</button>

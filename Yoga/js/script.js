@@ -227,7 +227,7 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         for (let i = 0; i < contactInput.length; i++) {
             contactInput[i].value = '';
-        };
+        }
         }else{
             console.log(contactInput[1].value);
             statusMessage.innerHTML = message.numbers;
@@ -238,7 +238,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 });
-function cislo(){
-    if (event.keyCode != 43 && event.keyCode < 48 || event.keyCode > 57)
+function cislo(event){
+
+    console.log(event);
+    if (event.which != 43 && event.which < 48 || event.which > 57 || event.watch == 8)
         event.preventDefault();
 }
