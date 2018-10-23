@@ -144,7 +144,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
     more.addEventListener('click', function () {
         overlay.style.display = 'block';
-        console.log(this);
         this.classList.add('more-splash');
         document.body.style.overflow = 'hidden';
     });
@@ -161,18 +160,21 @@ window.addEventListener('DOMContentLoaded', function () {
         loading: 'Загрузка..',
         success: 'Спасибо!Скоро мы с вами свяжемся!',
         failure: 'Что-то пошло не так..',
-        numbers: 'Введите числа чилса в строку "номер телефона"'
+        numbers: 'Введите числа  в строку "номер телефона"',
+
     };
 
     let form = document.querySelector('.main-form'),
         input = form.getElementsByTagName('input'),
-        statusMessage = document.createElement('div');
+        statusMessage = document.createElement('div'),
+        img = document.createElement('img');
 
-    statusMessage.classList.add('status');
+
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        form.appendChild(statusMessage);
+        // form.appendChild(statusMessage);
+        form.appendChild(img);
 
         let request = new XMLHttpRequest();
         request.open('POST', 'server.php');
@@ -186,9 +188,14 @@ window.addEventListener('DOMContentLoaded', function () {
             if (request.readyState < 4) {
                 statusMessage.innerHTML = message.loading;
             } else if (request.readyState === 4 && request.status === 200) {
-                statusMessage.innerHTML = message.success;
+                // statusMessage.innerHTML = message.success;
+                img.src = "img/callBack.jpg";
+                img.style.paddingLeft= "17%";
+
             } else {
-                statusMessage.innerHTML = message.failure;
+                // statusMessage.innerHTML = message.failure;
+                img.src = "img/dog2.jpg";
+                img.style.paddingLeft= "17%";
             }
         });
         for (let i = 0; i < input.length; i++) {
@@ -203,36 +210,38 @@ window.addEventListener('DOMContentLoaded', function () {
     //Contanct Form
     let contactFrom = document.querySelector('.contact-form'),
         contactInput = contactFrom.getElementsByTagName('input');
-    statusMessage.classList.add('status');
+
 
     contactFrom.addEventListener('submit', function (event) {
         event.preventDefault();
-        contactFrom.appendChild(statusMessage);
+        // contactFrom.appendChild(statusMessage);
+        contactFrom.appendChild(img);
 
         let request = new XMLHttpRequest();
         request.open('POST', 'server.php');
         request.setRequestHeader('Content-Type', 'application/x-ww-form-urlencoded');
         let formData = new FormData(contactFrom);
         request.send(formData);
-        if(contactInput[1].value == (/\D/, '')){
+
 
             request.addEventListener('readystatechange', function () {
             if (request.readyState < 4) {
                 statusMessage.innerHTML = message.loading;
             } else if (request.readyState === 4 && request.status === 200) {
-                statusMessage.innerHTML = message.success;
+                // statusMessage.innerHTML = message.success;
+                img.src = "img/callBack.jpg";
+                img.style.paddingLeft= "17%";
             } else {
-                statusMessage.innerHTML = message.failure;
+                // statusMessage.innerHTML = message.failure;
+                img.src = "img/dog2.jpg";
+                img.style.paddingLeft= "17%";
             }
         });
         for (let i = 0; i < contactInput.length; i++) {
             contactInput[i].value = '';
+            console.log(1);
         }
-        }else{
-            console.log(contactInput[1].value);
-            statusMessage.innerHTML = message.numbers;
-            contactInput[1].value = '';
-        }
+
 
     });
 
@@ -240,7 +249,6 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 function cislo(event){
 
-    console.log(event);
-    if (event.which != 43 && event.which < 48 || event.which > 57 || event.watch == 8)
+    if (event.which != 43 && event.which < 48 || event.which > 57 || event.which == 8)
         event.preventDefault();
 }
